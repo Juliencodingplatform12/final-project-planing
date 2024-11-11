@@ -1,78 +1,83 @@
-let circleX, circleY;
-let rectX, rectY;
-let circleSize = 50;
-let rectSize = 50;
-let circleColor, rectColor;
-let circleSpeedX, circleSpeedY, rectSpeedX, rectSpeedY;
+let circle = {
+  x: 0,
+  y: 0,
+  size: 50,
+  color: 0,
+  speedX: 0,
+  speedY: 0
+}
 
+let rectangle = {
+  x: 0,
+  y: 0,
+  size: 50,
+  color: 0,
+  speedX: 0,
+  speedY: 0
+}
 
 function setup() {
   createCanvas(400, 400);
 
 
-  circleX = random(width);
-  circleY = random(height);
-  rectX = random(width);
-  rectY = random(height);
- 
+  circle.x = random(width);
+  circle.y = random(height);
+  circle.color = color(255, 0, 0); 
+  circle.speedX = random(-2, 2);
+  circle.speedY = random(-2, 2);
 
-
-  circleColor = color(255, 0, 0); // Red
-  rectColor = color(0, 0, 255);   // Blue
- 
-
-
-  circleSpeedX = random(-2, 2);
-  circleSpeedY = random(-2, 2);
-  rectSpeedX = random(-2, 2);
-  rectSpeedY = random(-2, 2);
+  // Initialize rectangle properties
+  rectangle.x = random(width);
+  rectangle.y = random(height);
+  rectangle.color = color(0, 0, 255); 
+  rectangle.speedX = random(-2, 2);
+  rectangle.speedY = random(-2, 2);
 }
-
 
 function draw() {
   background(220);
 
-
-  circleX += circleSpeedX;
-  circleY += circleSpeedY;
-
-
-  rectX += rectSpeedX;
-  rectY += rectSpeedY;
+  // Move shapes
+  circle.x += circle.speedX;
+  circle.y += circle.speedY;
+  rectangle.x += rectangle.speedX;
+  rectangle.y += rectangle.speedY;
 
 
-  if (dist(circleX, circleY, rectX + rectSize / 2, rectY + rectSize / 2) < (circleSize + rectSize) / 2) {
- 
-    circleSpeedX *= -1;
-    circleSpeedY *= -1;
-    rectSpeedX *= -1;
-    rectSpeedY *= -1;
-    circleColor = color(0, 255, 0);
-    rectColor = color(255, 255, 0);
+  if (overlap(circle, rectangle)) {
+    circle.speedX *= -1;
+    circle.speedY *= -1;
+    rectangle.speedX *= -1;
+    rectangle.speedY *= -1;
+    circle.color = color(0, 255, 0); 
+    rectangle.color = color(255, 255, 0); 
   } else {
-
-
-    circleColor = color(255, 0, 0);
-    rectColor = color(0, 0, 255);  
+    circle.color = color(255, 0, 0); 
+    rectangle.color = color(0, 0, 255)
   }
 
 
-  fill(circleColor);
-  ellipse(circleX, circleY, circleSize);
-  fill(rectColor);
-  rect(rectX, rectY, rectSize, rectSize);
+  fill(circle.color);
+  ellipse(circle.x, circle.y, circle.size);
+  fill(rectangle.color);
+  rect(rectangle.x, rectangle.y, rectangle.size, rectangle.size);
+}
+
+
+function overlap(circle, rectangle) {
+  return dist(circle.x, circle.y, rectangle.x + rectangle.size / 2, rectangle.y + rectangle.size / 2) < (circle.size + rectangle.size) / 2;
 }
 
 
 function keyPressed() {
   if (key === 'r') {
-    circleX = random(width);
-    circleY = random(height);
-    rectX = random(width);
-    rectY = random(height);
-    circleSpeedX = random(-2, 2);
-    circleSpeedY = random(-2, 2);
-    rectSpeedX = random(-2, 2);
-    rectSpeedY = random(-2, 2);
+    circle.x = random(width);
+    circle.y = random(height);
+    rectangle.x = random(width);
+    rectangle.y = random(height);
+    circle.speedX = random(-2, 2);
+    circle.speedY = random(-2, 2);
+    rectangle.speedX = random(-2, 2);
+    rectangle.speedY = random(-2, 2);
   }
 }
