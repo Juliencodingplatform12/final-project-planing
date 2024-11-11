@@ -26,7 +26,7 @@ function setup() {
   circle.speedX = random(-2, 2);
   circle.speedY = random(-2, 2);
 
-  // Initialize rectangle properties
+
   rectangle.x = random(width);
   rectangle.y = random(height);
   rectangle.color = color(0, 0, 255); 
@@ -37,7 +37,7 @@ function setup() {
 function draw() {
   background(220);
 
-  // Move shapes
+
   circle.x += circle.speedX;
   circle.y += circle.speedY;
   rectangle.x += rectangle.speedX;
